@@ -1,0 +1,75 @@
+<android.support.v7.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/toolbar"
+    android:minHeight="?attr/actionBarSize"
+    android:background="#ec6168"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    >
+    
+  
+    
+    
+    <RelativeLayout 
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+        
+       
+        <EditText
+            android:id="@+id/editText1"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/searchborder"
+            android:drawableLeft="@drawable/searchicon"
+            android:ems="10"
+            android:hint="  Search  product etc."
+            android:inputType="text"
+            android:textColor="#ffffff"
+            android:textColorHint="#ffffff"
+            android:cursorVisible="false"
+            
+            android:textSize="16dp" >
+
+        </EditText>
+
+        <ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_above="@+id/editText1"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="14dp"
+            android:layout_marginRight="24dp"
+            android:background="@drawable/cart" />
+        
+        
+        <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_alignTop="@+id/imageView1"
+                android:layout_marginRight="20dp"
+                android:layout_toLeftOf="@+id/imageView1"
+                android:src="@drawable/alert" />
+        
+        <ImageView
+                android:id="@+id/mic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBottom="@+id/editText1"
+                android:layout_alignLeft="@+id/imageView1"
+                android:layout_alignParentRight="true"
+                android:layout_alignTop="@+id/editText1"
+                android:layout_marginTop="5dp"
+                 android:layout_marginBottom="5dp"
+                android:src="@drawable/mic" />
+    
+</RelativeLayout>
+
+    
+</android.support.v7.widget.Toolbar>

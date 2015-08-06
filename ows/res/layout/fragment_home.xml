@@ -1,0 +1,96 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.womenshopping.HomeActivity" xmlns:app="http://schemas.android.com/apk/res/com.example.neww">
+    
+    
+    
+     <ScrollView 
+    android:id="@+id/ScrollView01"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+
+   <LinearLayout android:layout_width="fill_parent"
+       android:layout_height="fill_parent"
+       android:padding="10dp"
+       android:orientation="vertical">
+       
+       
+       <android.support.v4.view.ViewPager
+        android:id="@+id/pager"
+        android:layout_width="wrap_content" 
+        android:layout_height="150dp"
+        android:background="#e3e3e3"
+       />
+       
+        <com.viewpagerindicator.CirclePageIndicator
+        android:id="@+id/indicator"
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        app:fillColor="#ec6168"
+        app:strokeWidth="1dp"
+        android:layout_below="@+id/pager" />
+        
+        <View android:layout_width="fill_parent"
+ 				    android:layout_height="5dp"
+ 				    android:background="@drawable/toolbar_dropshadow"/>
+        
+        <ImageView android:layout_width="fill_parent"
+            android:layout_height="100dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/deal"
+            android:elevation="6dp"/>
+       
+        <View android:layout_width="fill_parent"
+ 				    android:layout_height="5dp"
+ 				    android:background="@drawable/toolbar_dropshadow"/>
+        
+             <Button
+                android:id="@+id/button1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="CATEGORIES"
+                android:background="#ec6168"
+                android:textColor="#FFFFFF"
+                android:elevation="6dp"
+                />
+ 				<View android:layout_width="fill_parent"
+ 				    android:layout_height="5dp"
+ 				    android:background="@drawable/toolbar_dropshadow"/>
+
+       
+      
+            
+       
+            <ExpandableListView
+                android:id="@+id/expandableListView"
+                android:layout_width="fill_parent"
+                android:layout_height="260dp"
+                android:layout_marginTop="5dp"
+                android:divider="#ffffff"
+                android:dividerHeight="0.5dp"
+                android:indicatorLeft="?android:attr/expandableListPreferredItemIndicatorLeft" >
+        
+            </ExpandableListView>
+
+            <Button
+                android:id="@+id/trand"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="#ec6168"
+                android:text="Shop By TRENDS"
+                android:elevation="6dp"
+                android:textColor="#ffffff" />
+            
+        <View android:layout_width="fill_parent"
+ 				    android:layout_height="5dp"
+ 				    android:background="@drawable/toolbar_dropshadow"/>
+            
+            </LinearLayout>
+            
+   </ScrollView>
+
+  
+</RelativeLayout>
