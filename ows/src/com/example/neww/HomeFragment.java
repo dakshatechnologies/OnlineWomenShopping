@@ -1,13 +1,12 @@
 package com.example.neww;
 
 import java.util.ArrayList;
-
+import java.util.HashMap;
+import java.util.List;
 
 import com.JSON.ows.Webservices;
 
 import com.viewpagerindicator.CirclePageIndicator;
-
-
 
 import android.R.color;
 import android.app.Fragment;
@@ -28,71 +27,78 @@ import android.widget.ExpandableListView;
 import android.widget.Toast;
 import android.widget.ExpandableListView.OnChildClickListener;
 
-public class HomeFragment extends Fragment implements OnChildClickListener {
-	
+public class HomeFragment extends Fragment{
+
 	private ArrayList<String> parentItems = new ArrayList<String>();
-	private ArrayList<Object> childItems = new ArrayList<Object>();
-	
-	final String url1="http://onlinewomenshopping.com/EthnicWear.php?id=19";
-	 final String url2="http://onlinewomenshopping.com/EthnicWear.php?id=4";
-	
+	HashMap<String, List<String>> listDataChild;
+
+	String IDS[] = new String[] { "19", "4", "6", "346", "36", "37", "39",
+			"362", "365", "52", "53", "54", "59", "358", "77", "75", "76",
+			"78", "317", "316", "195", "194", "369" };
+
+	final String url1 = "http://onlinewomenshopping.com/EthnicWear.php?id=19";
+	final String url2 = "http://onlinewomenshopping.com/EthnicWear.php?id=4";
+
 	int[] images;
 	ViewPager viewPager;
 	ViewpagaerAdapter viewadapter;
-	
+
 	CirclePageIndicator mIndicator;
 	Button button;
-	public HomeFragment(){}
+
+	public HomeFragment() {
+	}
+
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		// TODO Auto-generated method stub
-		//return super.onCreateView(inflater, container, savedInstanceState);
-		View v=inflater.inflate(R.layout.fragment_home,container, false);
-		
-		images=new int[]{R.drawable.banner,R.drawable.sandle,R.drawable.bags,R.drawable.jewellery};
-		
-		viewPager = (ViewPager)v.findViewById(R.id.pager);
-		button=(Button)v.findViewById(R.id.button1);
+		// return super.onCreateView(inflater, container, savedInstanceState);
+		View v = inflater.inflate(R.layout.fragment_home, container, false);
+
+		images = new int[] { R.drawable.banner, R.drawable.sandle,
+				R.drawable.bags, R.drawable.jewellery };
+
+		viewPager = (ViewPager) v.findViewById(R.id.pager);
+		button = (Button) v.findViewById(R.id.button1);
 		button.setOnClickListener(new OnClickListener() {
-			
+
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-		//		
-				new Webservices().mEthnicwear(getActivity(), url1);
-				Intent io=new Intent(getActivity(),Productlist.class);
-				getActivity().startActivity(io);
+				//
+				// new Webservices().mEthnicwear(getActivity(), url1);
+				// Intent io=new Intent(getActivity(),Productlist.class);
+				// getActivity().startActivity(io);
 			}
 		});
-		viewadapter = new ViewpagaerAdapter(getActivity(),images);
-		
+		viewadapter = new ViewpagaerAdapter(getActivity(), images);
+
 		viewPager.setAdapter(viewadapter);
-		mIndicator = (CirclePageIndicator)v.findViewById(R.id.indicator);
+		mIndicator = (CirclePageIndicator) v.findViewById(R.id.indicator);
 		mIndicator.setBackgroundColor(Color.DKGRAY);
-	    mIndicator.setViewPager(viewPager);
-	      
-		
-		 ExpandableListView expandableList = (ExpandableListView)v.findViewById(R.id.expandableListView); // you can use (ExpandableListView) findViewById(R.id.list)
+		mIndicator.setViewPager(viewPager);
+		setGroupParents();
+		setChildData();
 
-	    	expandableList.setDividerHeight(2);
-	    	expandableList.setGroupIndicator(null);
-	    	expandableList.setClickable(true);
+		ExpandableListView expandableList = (ExpandableListView) v.findViewById(R.id.expandableListView); 
+		 ExpandableListAdap listAdapter=new ExpandableListAdap(getActivity(),parentItems,listDataChild);
+		expandableList.setAdapter(listAdapter);
+		expandableList.setOnChildClickListener(new OnChildClickListener() {
 
-	    	setGroupParents();
-	    	setChildData();
+			@Override
+			public boolean onChildClick(ExpandableListView parent, View v,
+					int groupPosition, int childPosition, long id) {
+				// TODO Auto-generated method stub
+				display(childPosition, groupPosition);
+				return true;
+			}
+		});
 
-	    	ExpandablelistAdapter adapter = new ExpandablelistAdapter(parentItems, childItems);
-	    	adapter.setInflater((LayoutInflater)getActivity().getSystemService(Context.LAYOUT_INFLATER_SERVICE), getActivity());
-	    	expandableList.setAdapter(adapter);
-	    	expandableList.setOnChildClickListener(this);
-		
-		
 		return v;
-		
-		
+
 	}
-	
+
 	public void setGroupParents() {
 		parentItems.add("Colthing");
 		parentItems.add("Accessories");
@@ -101,112 +107,221 @@ public class HomeFragment extends Fragment implements OnChildClickListener {
 		parentItems.add("Home & kitchen");
 		parentItems.add("Appliances");
 	}
-	
-	public void setChildData() {
 
+	public void setChildData() {
+		listDataChild = new HashMap<String, List<String>>();
 		// Android
-		ArrayList<String> child = new ArrayList<String>();
-		child.add("Ethnic Wear");
-		child.add("Western Wear");
-		child.add("Winter Wear");
-		child.add("Bollywood collection");
-		childItems.add(child);
+		ArrayList<String> child1 = new ArrayList<String>();
+		child1.add("Ethnic Wear");
+		child1.add("Western Wear");
+		child1.add("Winter Wear");
+		child1.add("Bollywood collection");
 
 		// Core Java
-		child = new ArrayList<String>();
-		child.add("Bags");
-		child.add("Purses");
-		child.add("scarves & stoles");
-		child.add("watches");
-		child.add("Brooches");
-		childItems.add(child);
+		ArrayList<String> child2 = new ArrayList<String>();
+		child2.add("Bags");
+		child2.add("Purses");
+		child2.add("scarves & stoles");
+		child2.add("watches");
+		child2.add("Brooches");
 
 		// Desktop Java
-		child = new ArrayList<String>();
-		child.add("Flats");
-		child.add("Sandals");
-		child.add("Bellies");
-		child.add("heels");
-		child.add("Slippers");
-		childItems.add(child);
+		ArrayList<String> child3 = new ArrayList<String>();
+		child3.add("Flats");
+		child3.add("Sandals");
+		child3.add("Bellies");
+		child3.add("heels");
+		child3.add("Slippers");
 
 		// Enterprise Java
-		child = new ArrayList<String>();
-		child.add("Necklaces");
-		child.add("Pendants");
-		child.add("earrings");
-		child.add("Bangle");
-		childItems.add(child);
-		
-		child = new ArrayList<String>();
-		child.add("Home Essentials");
-		child.add("Home Decor");
-		childItems.add(child);
-		
-		child = new ArrayList<String>();
-		child.add("Home Appliances");
-		child.add("Kitchen Appliances");
-		child.add("combos");
-		childItems.add(child);
-		
+		ArrayList<String> child4 = new ArrayList<String>();
+		child4.add("Necklaces");
+		child4.add("Pendants");
+		child4.add("earrings");
+		child4.add("Bangle");
+
+		ArrayList<String> child5 = new ArrayList<String>();
+		child5.add("Home Essentials");
+		child5.add("Home Decor");
+
+		ArrayList<String> child6 = new ArrayList<String>();
+		child6.add("Home Appliances");
+		child6.add("Kitchen Appliances");
+		child6.add("combos");
+		listDataChild.put(parentItems.get(0), child1);
+		listDataChild.put(parentItems.get(1), child2);
+		listDataChild.put(parentItems.get(2), child3);
+		listDataChild.put(parentItems.get(3), child4);
+		listDataChild.put(parentItems.get(4), child5);
+		listDataChild.put(parentItems.get(5), child6);
+
 	}
+
 	
-	 @Override
-		public boolean onChildClick(ExpandableListView parent, View v,
-				int groupPosition, int childPosition, long id) {
-			// TODO Auto-generated method stub
-		 
-//		 Toast.makeText(
-//                getActivity(),
-//                parentItems.get(groupPosition)
-//                        + " : "
-//                        + childItems.get(parentItems.get(groupPosition)).get(
-//                                 childPosition)+ childPosition, Toast.LENGTH_SHORT) .show();
-		 
-		
-		
-		 
-		
-		 display(childPosition, groupPosition);
-			return false;
+
+	public void display(int childPosition, int groupPosition) {
+
+		// Fragment fragment = null;
+
+		if (groupPosition == 0) {
+
+			switch (childPosition) {
+			case 0:
+				new Webservices().mEthnicwear(getActivity(),
+						"http://onlinewomenshopping.com/EthnicWear.php?id="
+								+ IDS[0]);
+				break;
+			case 1:
+				new Webservices().mEthnicwear(getActivity(),
+						"http://onlinewomenshopping.com/EthnicWear.php?id="
+								+ IDS[1]);
+				break;
+			case 2:
+				new Webservices().mEthnicwear(getActivity(),
+						"http://onlinewomenshopping.com/EthnicWear.php?id="
+								+ IDS[2]);
+				break;
+			case 3:
+				new Webservices().mEthnicwear(getActivity(),
+						"http://onlinewomenshopping.com/EthnicWear.php?id="
+								+ IDS[3]);
+				break;
+			}
 		}
-	 
-	 
-	 
-		private void display(int childPosition, int groupPosition) {
-			
-		//	  Fragment fragment = null;
-			  
-if(groupPosition==0 && childPosition==0)
-{
-	new Webservices().mEthnicwear(getActivity(), url1);
-//	Intent io=new Intent(getActivity(),Productlist.class);
-//	getActivity().startActivity(io);
+
+		else if (groupPosition == 1) {
+			switch (childPosition) {
+			case 0:
+				new Webservices().mEthnicwear(getActivity(),
+						"http://onlinewomenshopping.com/EthnicWear.php?id="
+								+ IDS[4]);
+				break;
+			case 1:
+				new Webservices().mEthnicwear(getActivity(),
+						"http://onlinewomenshopping.com/EthnicWear.php?id="
+								+ IDS[5]);
+				break;
+			case 2:
+				new Webservices().mEthnicwear(getActivity(),
+						"http://onlinewomenshopping.com/EthnicWear.php?id="
+								+ IDS[6]);
+				break;
+			case 3:
+				new Webservices().mEthnicwear(getActivity(),
+						"http://onlinewomenshopping.com/EthnicWear.php?id="
+								+ IDS[7]);
+				break;
+			case 4:
+				new Webservices().mEthnicwear(getActivity(),
+						"http://onlinewomenshopping.com/EthnicWear.php?id="
+								+ IDS[8]);
+				break;
+			}
+
+		} else if (groupPosition == 2) {
+			switch (childPosition) {
+			case 0:
+				new Webservices().mEthnicwear(getActivity(),
+						"http://onlinewomenshopping.com/EthnicWear.php?id="
+								+ IDS[9]);
+				break;
+			case 1:
+				new Webservices().mEthnicwear(getActivity(),
+						"http://onlinewomenshopping.com/EthnicWear.php?id="
+								+ IDS[10]);
+				break;
+			case 2:
+				new Webservices().mEthnicwear(getActivity(),
+						"http://onlinewomenshopping.com/EthnicWear.php?id="
+								+ IDS[11]);
+				break;
+			case 3:
+				new Webservices().mEthnicwear(getActivity(),
+						"http://onlinewomenshopping.com/EthnicWear.php?id="
+								+ IDS[12]);
+				break;
+			case 4:
+				new Webservices().mEthnicwear(getActivity(),
+						"http://onlinewomenshopping.com/EthnicWear.php?id="
+								+ IDS[13]);
+				break;
+			}
+
+		} else if (groupPosition == 3) {
+			switch (childPosition) {
+			case 0:
+				new Webservices().mEthnicwear(getActivity(),
+						"http://onlinewomenshopping.com/EthnicWear.php?id="
+								+ IDS[14]);
+				break;
+			case 1:
+				new Webservices().mEthnicwear(getActivity(),
+						"http://onlinewomenshopping.com/EthnicWear.php?id="
+								+ IDS[15]);
+				break;
+			case 2:
+				new Webservices().mEthnicwear(getActivity(),
+						"http://onlinewomenshopping.com/EthnicWear.php?id="
+								+ IDS[16]);
+				break;
+			case 3:
+				new Webservices().mEthnicwear(getActivity(),
+						"http://onlinewomenshopping.com/EthnicWear.php?id="
+								+ IDS[17]);
+				break;
+
+			}
+
+		} else if (groupPosition == 4) {
+			switch (childPosition) {
+			case 0:
+				new Webservices().mEthnicwear(getActivity(),
+						"http://onlinewomenshopping.com/EthnicWear.php?id="
+								+ IDS[18]);
+				break;
+			case 1:
+				new Webservices().mEthnicwear(getActivity(),
+						"http://onlinewomenshopping.com/EthnicWear.php?id="
+								+ IDS[19]);
+				break;
+
+			}
+
+		} else if (groupPosition == 5) {
+			switch (childPosition) {
+			case 0:
+				new Webservices().mEthnicwear(getActivity(),
+						"http://onlinewomenshopping.com/EthnicWear.php?id="
+								+ IDS[20]);
+				break;
+			case 1:
+				new Webservices().mEthnicwear(getActivity(),
+						"http://onlinewomenshopping.com/EthnicWear.php?id="
+								+ IDS[21]);
+				break;
+			case 2:
+				new Webservices().mEthnicwear(getActivity(),
+						"http://onlinewomenshopping.com/EthnicWear.php?id="
+								+ IDS[22]);
+				break;
+
+			}
+
+		}
 	}
 
-else if(groupPosition==0 && childPosition==1)
-{
-	new Webservices().mEthnicwear(getActivity(),url2);
-	Intent io=new Intent(getActivity(),Productlist.class);
-	getActivity().startActivity(io);
-}
-}
-				
+	// if (fragment != null) {
+	// FragmentManager fragmentManager = getFragmentManager();
+	// fragmentManager.beginTransaction().replace(R.id.content_frame,
+	// fragment).addToBackStack(null).commit();
+	//
+	// // update selected item and title, then close the drawer
+	//
+	// } else {
+	// // error in creating fragment
+	// Log.e("MainActivity", "Error in creating fragment");
+	// }
+	//
+	// }
 
-			
-//		        if (fragment != null) {
-//		            FragmentManager fragmentManager = getFragmentManager();
-//		            fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).addToBackStack(null).commit();
-//		 
-//		            // update selected item and title, then close the drawer
-//		           
-//		        } else {
-//		            // error in creating fragment
-//		            Log.e("MainActivity", "Error in creating fragment");
-//		        }
-//			
-//			}
-	
-	
-   
 }

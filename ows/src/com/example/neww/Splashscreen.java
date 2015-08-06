@@ -27,6 +27,7 @@ public class Splashscreen extends ActionBarActivity{
 			                   
 			                    Intent i=new Intent(getApplicationContext(),homepage.class);
 			                    startActivity(i);
+			                    finish();
 			                     
 			            
 			                     
